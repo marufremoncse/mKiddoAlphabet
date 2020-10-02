@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            font-family: Verdana, sans-serif;
+            margin: 0
+        }
+
+        .mySlides {
+            display: none
+        }
+
+        img {
+            vertical-align: middle;
+        }
+
+        /* Slideshow container */
+        .slideshow-container {
+
+            position: relative;
+            margin: auto;
+        }
+
+        /* Next & previous buttons */
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -22px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+        }
+
+        .intro {
+            top: 150px;
+        }
+
+        /* Position the "next button" to the right */
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        /* Fading animation */
+        .fade {
+            -webkit-animation-name: fade;
+            -webkit-animation-duration: 1.5s;
+            animation-name: fade;
+            animation-duration: 1.5s;
+        }
+
+        .main_intro {
+            position: absolute;
+            width: 100%;
+            z-index: 1;
+        }
+
+        .upper_intro {
+            position: absolute;
+            right: 40%;
+            top: 62px;
+            width: 15%;
+            z-index: 2;
+        }
+
+        @-webkit-keyframes fade {
+            from {
+                opacity: .4
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        @keyframes fade {
+            from {
+                opacity: .4
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        /* On smaller screens, decrease text size */
+        @media only screen and (max-width: 300px) {
+            .prev, .next, .text {
+                font-size: 11px
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <a id="intro" onclick="Reverse()">
+        <img id="main_intro_id" src="apple.jpg" class="main_intro">
+        <img src="play_button.png" class="upper_intro">
+    </a>
+    <div id="mainDiv" class="slideshow-container" style="display: none">
+    <div onclick="pause()" class="main_img">
+        <div class="mySlides fade">
+            <img id="1" src="apple.jpg" style="width:100%">
+        </div>
+
+        <div class="mySlides fade">
+            <img id="2" src="ball.jpg" style="width:100%">
+        </div>
+
+        <div class="mySlides fade">
+            <img id="3" src="cat.jpg" style="width:100%">
+        </div>
+
+        <div class="mySlides fade">
+            <img id="4" src="dog.jpg" style="width:100%">
+        </div>
+
+        <div class="mySlides fade">
+            <img id="5" src="elephant.jpg" style="width:100%">
+        </div>
+    </div>
+    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+</div>
+    <br>
+
+
+    <script>
+        var slideIndex = 1;
+        var song = ["Apple.m4a", "Ball.m4a", "Cat.m4a", "Dog.m4a", "Elephant.m4a"];
+        var mySong = new Audio();
+
+        function playSong(index) {
+            mySong.src = song[index];
+            mySong.play();
+        }
+
+        function pauseSong(index) {
+            mySong.src = song[index];
+            mySong.pause();
+        }
+
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        var intervalSys;
+        var slides = document.getElementsByClassName("mySlides");
+
+        function showSlides(n) {
+            clearTimeout(intervalSys);
+            var i;
+            if (n > slides.length) {
+                slideIndex = 1;
+            }
+            if (n < 1) {
+                slideIndex = slides.length;
+            }
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+                pauseSong(i);
+            }
+            slides[slideIndex - 1].style.display = "block";
+            playSong(slideIndex - 1);
+            intervalSys = setInterval("showSlides(++slideIndex)", 5000);
+        }
+
+        function Reverse() {
+            var x = document.getElementById("mainDiv");
+            var y = document.getElementById("intro");
+            x.style.display = "block";
+            y.style.display = "none";
+            showSlides(slideIndex);
+        }
+
+        function pause() {
+            var x = document.getElementById("mainDiv");
+            var y = document.getElementById("intro");
+            document.getElementById("main_intro_id").src = document.getElementById(slideIndex).src;
+            x.style.display = "none";
+            y.style.display = "block";
+            pauseSong(slideIndex - 1);
+            clearTimeout(intervalSys);
+        }
+
+    </script>
+
+</body>
+</html> 
